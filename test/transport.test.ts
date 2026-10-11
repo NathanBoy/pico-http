@@ -113,4 +113,36 @@ describe('fetchTransport', () => {
     expect(res.headers).toBeInstanceOf(HeaderBag);
     expect(res.headers.get('x-request-id')).toBe('abc');
   });
+
+  it('combines an external signal with a timeout and cancels on external abort', async () => {
+    const mockFetch: MockFetch = async (_url, init) =>
+      await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => resolve(new Response('{}', { status: 200 })), 5000);
+        init?.signal?.addEventListener('abort', () => {
+          clearTimeout(timer);
+          reject(new DOMException('Aborted', 'AbortError'));
+        });
+      });
+
+    const runWithAny = async (): Promise<boolean> => {
+      const transport = fetchTransport({ fetch: mockFetch });
+      const ctrl = new AbortController();
+      const pending = transport(new Request('/x', { timeout: 10000, signal: ctrl.signal }));
+      ctrl.abort();
+      await expect(pending).rejects.toBeInstanceOf(NetworkError);
+      return true;
+    };
+
+    // Native path.
+    await runWithAny();
+
+    // Fallback path (AbortSignal.any unavailable, e.g. Node < 20.3).
+    const original = (AbortSignal as { any?: typeof AbortSignal.any }).any;
+    try {
+      (AbortSignal as { any?: typeof AbortSignal.any }).any = undefined as never;
+      await runWithAny();
+    } finally {
+      (AbortSignal as { any?: typeof AbortSignal.any }).any = original;
+    }
+  });
 });

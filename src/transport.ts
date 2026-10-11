@@ -91,7 +91,7 @@ export function fetchTransport(options: FetchTransportOptions = {}): Transport {
     const hasTimeout = request.timeout != null && request.timeout > 0;
 
     if (hasExternal && hasTimeout) {
-      fetchInit.signal = AbortSignal.any([request.signal!, controller.signal]);
+      fetchInit.signal = combineSignals([request.signal!, controller.signal]);
     } else if (hasTimeout) {
       fetchInit.signal = controller.signal;
     } else if (hasExternal) {
@@ -156,4 +156,32 @@ async function parseBody(raw: Response, responseType: ResponseType): Promise<unk
       }
     }
   }
+}
+
+/**
+ * Combines several abort signals into one. Prefers the native
+ * `AbortSignal.any` when available, and otherwise falls back to a manual
+ * implementation so the library still works on Node < 20.3 (where
+ * `AbortSignal.any` is unavailable) while still advertising `node >= 18`.
+ */
+function combineSignals(signals: readonly AbortSignal[]): AbortSignal {
+  if (typeof AbortSignal.any === 'function') {
+    return AbortSignal.any(signals as AbortSignal[]);
+  }
+  const controller = new AbortController();
+  const cleanup: (() => void)[] = [];
+  const onAbort = (reason: unknown) => {
+    controller.abort(reason);
+    for (const fn of cleanup) fn();
+  };
+  for (const signal of signals) {
+    if (signal.aborted) {
+      onAbort(signal.reason);
+      return controller.signal;
+    }
+    const listener = () => onAbort(signal.reason);
+    signal.addEventListener('abort', listener, { once: true });
+    cleanup.push(() => signal.removeEventListener('abort', listener));
+  }
+  return controller.signal;
 }

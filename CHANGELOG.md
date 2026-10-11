@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `fetchTransport`: requests that combine an external `AbortSignal` with a
+  `timeout` no longer fail on Node < 20.3, where `AbortSignal.any` is
+  unavailable (a manual signal-combining fallback is used instead).
+
 ## [0.1.0] - 2026-10-11
 
 ### Added

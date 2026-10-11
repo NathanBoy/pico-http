@@ -23,6 +23,35 @@ into any TypeScript or JavaScript project — browser or Node 18+.
 - **Automatic body handling** — plain objects/arrays are JSON-encoded on send and JSON-decoded on receive.
 - **Modern output** — ships ESM, CommonJS and IIFE builds with full type declarations.
 
+## Design & motivation
+
+`pico-http` is deliberately small, and every design choice follows from a
+priority list:
+
+1. **One hook, both sides.** Interceptors use an onion model: `handle(request, next)`
+   runs your code before `await next()` on the way out and after it on the way
+   back. There is no separate `before`/`after`/`success`/`error` phase to
+   remember — a single interceptor can attach an auth header *and* time the
+   response in the same function.
+
+2. **Immutability as a safety net.** `Request`, `HeaderBag` and `QueryParams`
+   are immutable. An interceptor can derive a modified request
+   (`request.setHeader(...)`) without any risk of silently mutating a request
+   that another interceptor is still reading. Shared defaults are safe to reuse.
+
+3. **Built for the `fetch` era.** Native `fetch` + `AbortController` replace the
+   legacy `XMLHttpRequest` and the custom cancellation plumbing older clients
+   had to carry, and plain `async`/`await` replaces a dependency on RxJS.
+
+4. **The transport is a seam.** The pipeline ends in a plain
+   `(request) => Promise<Response>` function. Inject a mock transport and you
+   can exercise the whole interceptor chain — retries, timeouts, everything —
+   with zero network, which keeps tests fast and deterministic.
+
+5. **Zero runtime dependencies, tiny footprint.** ~4 KB gzipped. `fetch` is
+   already present in Node 18+ and every modern browser, so there is nothing
+   else to install.
+
 ## Install
 
 This project is distributed from GitHub (no npm package is published).
@@ -198,6 +227,7 @@ npm install
 npm test          # run the vitest suite
 npm run build     # emit ESM / CJS / IIFE + types into dist/
 npm run typecheck # strict TypeScript check
+node examples/demo.mjs  # run the usage demo (local server, offline-safe)
 ```
 
 ## License

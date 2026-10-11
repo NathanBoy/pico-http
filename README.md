@@ -7,7 +7,6 @@ interceptor pipeline, built on the native [`fetch`](https://developer.mozilla.or
 Angular's `HttpClient` into a ~4 KB, framework-agnostic library you can drop
 into any TypeScript or JavaScript project — browser or Node 18+.
 
-[![npm version](https://img.shields.io/npm/v/pico-http.svg?style=flat-square)](https://www.npmjs.com/package/pico-http)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue.svg?style=flat-square)](tsconfig.json)
 
@@ -26,8 +25,12 @@ into any TypeScript or JavaScript project — browser or Node 18+.
 
 ## Install
 
+This project is distributed from GitHub (no npm package is published).
+
 ```bash
-npm install pico-http
+npm install https://github.com/NathonBoy/pico-http.git
+# or clone it
+git clone https://github.com/NathonBoy/pico-http.git
 ```
 
 Requires Node 18+ or any modern browser.
@@ -199,4 +202,4 @@ npm run typecheck # strict TypeScript check
 
 ## License
 
-[MIT](LICENSE) © <YOUR-NAME>
+[MIT](LICENSE) © NathonBoy

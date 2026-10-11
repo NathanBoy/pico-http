@@ -37,6 +37,7 @@
     "typed",
     "http-client"
   ],
+  "author": "NathonBoy",
   "sideEffects": false,
   "license": "MIT",
   "engines": {

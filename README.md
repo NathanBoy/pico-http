@@ -57,9 +57,9 @@ priority list:
 This project is distributed from GitHub (no npm package is published).
 
 ```bash
-npm install https://github.com/NathonBoy/pico-http.git
+npm install https://github.com/NathanBoy/pico-http.git
 # or clone it
-git clone https://github.com/NathonBoy/pico-http.git
+git clone https://github.com/NathanBoy/pico-http.git
 ```
 
 Requires Node 18+ or any modern browser.
@@ -232,4 +232,4 @@ node examples/demo.mjs  # run the usage demo (local server, offline-safe)
 
 ## License
 
-[MIT](LICENSE) © NathonBoy
+[MIT](LICENSE) © NathanBoy

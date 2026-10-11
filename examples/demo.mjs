@@ -72,7 +72,7 @@ console.log('\nGET /users   ->', JSON.stringify(user.body), '| status', user.sta
 // ---------------------------------------------------------------------------
 // 4. Typed POST with automatic JSON encoding.
 // ---------------------------------------------------------------------------
-const created = await client.post('/create', { name: 'NathonBoy' });
+const created = await client.post('/create', { name: 'NathanBoy' });
 console.log('POST /create ->', JSON.stringify(created.body));
 
 // ---------------------------------------------------------------------------

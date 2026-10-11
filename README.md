@@ -226,6 +226,7 @@ expect(body.echo).toBe('/ping');
 ```bash
 npm install
 npm test          # run the vitest suite
+npm run test:coverage  # run tests with a coverage report
 npm run build     # emit ESM / CJS / IIFE + types into dist/
 npm run typecheck # strict TypeScript check
 node examples/demo.mjs  # run the usage demo (local server, offline-safe)

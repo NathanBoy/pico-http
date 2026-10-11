@@ -18,6 +18,7 @@ npm install
 | `npm test`               | Run the vitest suite once                       |
 | `npm run test:watch`     | Run tests in watch mode                         |
 | `npm run typecheck`      | Strict TypeScript type check                    |
+| `npm run test:coverage`  | Run tests with a v8 coverage report             |
 | `npm run lint`           | ESLint over `src/` and `test/`                  |
 | `npm run lint:fix`       | Auto-fix lint issues                            |
 | `npm run format`         | Format everything with Prettier                 |
@@ -29,6 +30,13 @@ Run the full local suite before submitting a PR:
 
 ```bash
 npm run typecheck && npm run lint && npm run format:check && npm test && npm run build
+```
+
+Coverage is enforced in CI with thresholds of 85% lines/statements, 90%
+functions and 80% branches. To review the report locally:
+
+```bash
+npm run test:coverage
 ```
 
 ## Commit conventions

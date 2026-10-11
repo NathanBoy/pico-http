@@ -42,14 +42,14 @@ export function retryInterceptor(options: RetryOptions = {}): Interceptor {
     name: 'retry',
     async handle(request, next) {
       let attempt = 0;
-      // eslint-disable-next-line no-constant-condition
-      while (true) {
+      for (;;) {
         try {
           return await next(request);
         } catch (error) {
           const shouldRetry = retryOn ? retryOn(error, attempt) : defaultShouldRetry(error);
           if (!shouldRetry || attempt >= retries) throw error;
-          const wait = typeof delay === 'function' ? delay(attempt, error) : (delay as number) * 2 ** attempt;
+          const wait =
+            typeof delay === 'function' ? delay(attempt, error) : (delay as number) * 2 ** attempt;
           if (wait > 0) await sleep(wait);
           attempt += 1;
         }

@@ -25,6 +25,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepublishOnly": "npm run build && npm run test"
   },
   "keywords": [
@@ -38,14 +42,27 @@
     "http-client"
   ],
   "author": "NathanBoy",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NathanBoy/pico-http.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NathanBoy/pico-http/issues"
+  },
+  "homepage": "https://github.com/NathanBoy/pico-http#readme",
   "sideEffects": false,
   "license": "MIT",
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^9.1.2",
+    "prettier": "^3.9.10",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
+    "typescript-eslint": "^8.71.1",
     "vitest": "^2.1.8"
   }
 }

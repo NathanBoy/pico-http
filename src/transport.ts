@@ -157,4 +157,3 @@ async function parseBody(raw: Response, responseType: ResponseType): Promise<unk
     }
   }
 }
-

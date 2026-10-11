@@ -13,13 +13,7 @@ export interface QueryObject {
 
 /** A single query value. Arrays expand to repeated keys; objects flatten to `key[sub]=...`. */
 export type QueryValue =
-  | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | readonly QueryValue[]
-  | QueryObject;
+  string | number | boolean | null | undefined | readonly QueryValue[] | QueryObject;
 
 /** Anything that can seed a {@link QueryParams}. */
 export type QueryInput =
@@ -41,11 +35,7 @@ function encodeValue(value: unknown): string | undefined {
   return encodeURIComponent(String(value));
 }
 
-function flatten(
-  key: string,
-  value: QueryValue,
-  out: [string, string][],
-): void {
+function flatten(key: string, value: QueryValue, out: [string, string][]): void {
   if (value === null || value === undefined) return;
   if (Array.isArray(value)) {
     for (const item of value) flatten(key, item, out);

@@ -14,5 +14,10 @@ export { QueryParams, EMPTY_PARAMS, type QueryInput, type QueryValue } from './p
 export { RequestError, TimeoutError, NetworkError, HttpError } from './error.js';
 export { createPipeline } from './pipeline.js';
 export { fetchTransport, type Transport, type FetchTransportOptions } from './transport.js';
-export { retryInterceptor, loggerInterceptor, type RetryOptions, type Logger } from './interceptors.js';
+export {
+  retryInterceptor,
+  loggerInterceptor,
+  type RetryOptions,
+  type Logger,
+} from './interceptors.js';
 export type { Interceptor, NextFn } from './interceptor.js';

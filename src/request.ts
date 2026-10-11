@@ -13,24 +13,10 @@ import { QueryParams, type QueryInput } from './params.js';
 
 /** Supported HTTP methods. */
 export type HttpMethod =
-  | 'GET'
-  | 'HEAD'
-  | 'POST'
-  | 'PUT'
-  | 'PATCH'
-  | 'DELETE'
-  | 'OPTIONS'
-  | 'CONNECT'
-  | 'TRACE';
+  'GET' | 'HEAD' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'CONNECT' | 'TRACE';
 
 /** How the response body should be interpreted. */
-export type ResponseType =
-  | 'json'
-  | 'text'
-  | 'blob'
-  | 'arrayBuffer'
-  | 'stream'
-  | 'raw';
+export type ResponseType = 'json' | 'text' | 'blob' | 'arrayBuffer' | 'stream' | 'raw';
 
 /** Options that configure a single request. */
 export interface RequestOptions {

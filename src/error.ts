@@ -56,7 +56,8 @@ export class HttpError extends RequestError {
 
   constructor(response: Response<unknown>, message?: string) {
     super(
-      message ?? `Request to "${response.url}" failed with status ${response.status} ${response.statusText}.`.trim(),
+      message ??
+        `Request to "${response.url}" failed with status ${response.status} ${response.statusText}.`.trim(),
       response.url,
       response.method,
     );

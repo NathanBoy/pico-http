@@ -60,7 +60,14 @@ describe('retryInterceptor', () => {
 
   it('retries 5xx and 429 HttpError but not 4xx', async () => {
     const err = (status: number) =>
-      new Response({ status, statusText: '', headers: new HeaderBag(), body: null, url: '/x', method: 'GET' });
+      new Response({
+        status,
+        statusText: '',
+        headers: new HeaderBag(),
+        body: null,
+        url: '/x',
+        method: 'GET',
+      });
 
     let fiveCalls = 0;
     const serverDown = async () => {

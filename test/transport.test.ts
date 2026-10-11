@@ -38,7 +38,13 @@ describe('fetchTransport', () => {
       return new Response('', { status: 200 });
     };
     const transport = fetchTransport({ fetch: mockFetch });
-    await transport(new Request('/x', { method: 'POST', body: { a: 1 }, headers: { 'content-type': 'application/vnd.api+json' } }));
+    await transport(
+      new Request('/x', {
+        method: 'POST',
+        body: { a: 1 },
+        headers: { 'content-type': 'application/vnd.api+json' },
+      }),
+    );
     expect((captured?.headers as Headers)?.get('content-type')).toBe('application/vnd.api+json');
   });
 
@@ -57,7 +63,8 @@ describe('fetchTransport', () => {
   });
 
   it('does not throw on non-2xx by default', async () => {
-    const mockFetch: MockFetch = async () => new Response('nope', { status: 404, statusText: 'Not Found' });
+    const mockFetch: MockFetch = async () =>
+      new Response('nope', { status: 404, statusText: 'Not Found' });
     const transport = fetchTransport({ fetch: mockFetch });
     const res = await transport(new Request('/x'));
     expect(res.status).toBe(404);
@@ -74,7 +81,9 @@ describe('fetchTransport', () => {
         });
       });
     const transport = fetchTransport({ fetch: mockFetch });
-    await expect(transport(new Request('/x', { timeout: 10 }))).rejects.toBeInstanceOf(TimeoutError);
+    await expect(transport(new Request('/x', { timeout: 10 }))).rejects.toBeInstanceOf(
+      TimeoutError,
+    );
   });
 
   it('throws NetworkError when fetch rejects', async () => {

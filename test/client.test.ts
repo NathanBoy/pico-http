@@ -27,13 +27,19 @@ describe('PicoClient', () => {
   });
 
   it('resolves relative URLs against baseUrl', async () => {
-    const client = new PicoClient({ baseUrl: 'https://api.example.com/v1', transport: okTransport });
+    const client = new PicoClient({
+      baseUrl: 'https://api.example.com/v1',
+      transport: okTransport,
+    });
     const res = await client.get<Echo>('users');
     expect(res.body.url).toBe('https://api.example.com/v1/users');
   });
 
   it('does not rewrite absolute URLs when baseUrl is set', async () => {
-    const client = new PicoClient({ baseUrl: 'https://api.example.com/v1', transport: okTransport });
+    const client = new PicoClient({
+      baseUrl: 'https://api.example.com/v1',
+      transport: okTransport,
+    });
     const res = await client.get<Echo>('https://other.example.com/x');
     expect(res.body.url).toBe('https://other.example.com/x');
   });

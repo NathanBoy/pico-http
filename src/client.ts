@@ -55,15 +55,17 @@ export class PicoClient {
     this.throwHttpErrors = options.throwHttpErrors ?? false;
     this.defaultTimeout = options.defaultTimeout;
 
-    const transport: Transport =
-      options.transport ?? cachedTransport;
+    const transport: Transport = options.transport ?? cachedTransport;
     this.handler = createPipeline(options.interceptors ?? [], transport);
   }
 
   /**
    * Core dispatch. Accepts a pre-built {@link Request} or a URL plus options.
    */
-  async request<T = unknown>(input: Request | string, init: RequestOptions = {}): Promise<Response<T>> {
+  async request<T = unknown>(
+    input: Request | string,
+    init: RequestOptions = {},
+  ): Promise<Response<T>> {
     const url = input instanceof Request ? input.url : input;
     const resolved = this.resolveUrl(url);
 
@@ -147,6 +149,5 @@ function requestToOptions(request: Request): RequestOptions {
 
 // Deferred import avoids a circular dependency at module-evaluation time.
 const cachedTransport: Transport = fetchTransport();
-
 
 export type { HttpMethod, RequestOptions };

@@ -17,7 +17,9 @@ export type HeaderInput =
   | null
   | undefined;
 
-function normalizeRecord(input: Record<string, string | readonly string[] | undefined | null>): [string, string][] {
+function normalizeRecord(
+  input: Record<string, string | readonly string[] | undefined | null>,
+): [string, string][] {
   const entries: [string, string][] = [];
   for (const [name, value] of Object.entries(input)) {
     if (value == null) continue;
@@ -108,7 +110,10 @@ export class HeaderBag {
     const copy = this.#clone();
     const key = name.toLowerCase();
     const existing = copy.store.get(key) ?? [];
-    copy.store.set(key, existing.concat(Array.isArray(value) ? value.map(String) : [String(value)]));
+    copy.store.set(
+      key,
+      existing.concat(Array.isArray(value) ? value.map(String) : [String(value)]),
+    );
     return copy;
   }
 

@@ -57,10 +57,7 @@ const baseUrl = `http://127.0.0.1:${server.address().port}`;
 const client = new PicoClient({
   baseUrl,
   throwHttpErrors: false, // inspect response.ok instead of throwing by default
-  interceptors: [
-    retryInterceptor({ retries: 2, delay: 50 }),
-    loggerInterceptor(),
-  ],
+  interceptors: [retryInterceptor({ retries: 2, delay: 50 }), loggerInterceptor()],
 });
 
 // ---------------------------------------------------------------------------

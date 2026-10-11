@@ -7,6 +7,7 @@ interceptor pipeline, built on the native [`fetch`](https://developer.mozilla.or
 Angular's `HttpClient` into a ~4 KB, framework-agnostic library you can drop
 into any TypeScript or JavaScript project — browser or Node 18+.
 
+[![CI](https://github.com/NathanBoy/pico-http/actions/workflows/ci.yml/badge.svg)](https://github.com/NathanBoy/pico-http/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue.svg?style=flat-square)](tsconfig.json)
 
@@ -31,7 +32,7 @@ priority list:
 1. **One hook, both sides.** Interceptors use an onion model: `handle(request, next)`
    runs your code before `await next()` on the way out and after it on the way
    back. There is no separate `before`/`after`/`success`/`error` phase to
-   remember — a single interceptor can attach an auth header *and* time the
+   remember — a single interceptor can attach an auth header _and_ time the
    response in the same function.
 
 2. **Immutability as a safety net.** `Request`, `HeaderBag` and `QueryParams`
@@ -100,8 +101,8 @@ import { PicoClient, retryInterceptor, loggerInterceptor } from 'pico-http';
 const client = new PicoClient({
   baseUrl: 'https://api.example.com',
   interceptors: [
-    retryInterceptor({ retries: 3 }),       // exponential backoff
-    loggerInterceptor(),                     // log requests, status & latency
+    retryInterceptor({ retries: 3 }), // exponential backoff
+    loggerInterceptor(), // log requests, status & latency
   ],
 });
 ```
@@ -197,18 +198,18 @@ expect(body.echo).toBe('/ping');
 
 ## API at a glance
 
-| Export | Description |
-| --- | --- |
-| `PicoClient` | The main client; holds base URL, defaults, interceptors & transport. |
-| `Request` | Immutable request description flowing through the pipeline. |
-| `Response<T>` | Parsed, normalized response (`body`, `status`, `headers`, `ok`). |
-| `HeaderBag` | Immutable, case-insensitive header container. |
-| `QueryParams` | Immutable URL query builder with deterministic encoding. |
-| `HttpError` / `TimeoutError` / `NetworkError` | Typed error hierarchy. |
-| `retryInterceptor` / `loggerInterceptor` | Built-in interceptors. |
-| `fetchTransport` | Default transport; swap with your own for tests. |
-| `createPipeline` | Low-level composition of interceptors + a transport. |
-| `Interceptor` / `NextFn` | The interceptor contract. |
+| Export                                        | Description                                                          |
+| --------------------------------------------- | -------------------------------------------------------------------- |
+| `PicoClient`                                  | The main client; holds base URL, defaults, interceptors & transport. |
+| `Request`                                     | Immutable request description flowing through the pipeline.          |
+| `Response<T>`                                 | Parsed, normalized response (`body`, `status`, `headers`, `ok`).     |
+| `HeaderBag`                                   | Immutable, case-insensitive header container.                        |
+| `QueryParams`                                 | Immutable URL query builder with deterministic encoding.             |
+| `HttpError` / `TimeoutError` / `NetworkError` | Typed error hierarchy.                                               |
+| `retryInterceptor` / `loggerInterceptor`      | Built-in interceptors.                                               |
+| `fetchTransport`                              | Default transport; swap with your own for tests.                     |
+| `createPipeline`                              | Low-level composition of interceptors + a transport.                 |
+| `Interceptor` / `NextFn`                      | The interceptor contract.                                            |
 
 ## Why not just `fetch` or axios?
 
@@ -229,6 +230,12 @@ npm run build     # emit ESM / CJS / IIFE + types into dist/
 npm run typecheck # strict TypeScript check
 node examples/demo.mjs  # run the usage demo (local server, offline-safe)
 ```
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for
+setup, the full check suite, and commit conventions. This project adheres to a
+[Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
